@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Fleet Management System | University of Rwanda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <img src="./image/logo_for_ur.png" alt="University of Rwanda Logo" class="login-logo">
+            <h1>Fleet Management System</h1>
+            <p>University of Rwanda</p>
+        </div>
+        
+        <div class="login-form-container">
+            <h2><i class="fas fa-user-lock"></i> Login</h2>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-key"></i> Password</label>
+                    <div class="password-input">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="login-button">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+        </div>
+        
+        <div class="login-footer">
+            <p>&copy; 2024 University of Rwanda - Fleet Management System. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        document.querySelector('.toggle-password').addEventListener('click', function() {
+            const passwordInput = document.querySelector('#password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Handle login form submission
+        document.querySelector('.login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // For demo purposes, using a simple check
+            // In a real application, this should be handled by a backend server
+            if (username === 'admin' && password === 'admin123') {
+                // Store login state
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', username);
+                
+                // Redirect to admin dashboard
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html> 
