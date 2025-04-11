@@ -1,0 +1,92 @@
+:root {
+    --ur-blue: #007bff;    
+    --ur-light: #f4f7fa;
+    --ur-dark-blue: #93c4fc; 
+    --ur-white: #ffffff;
+    --ur-gray: #e9ecef;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--ur-light);
+    color: #333;
+  }
+  
+  header {
+    background-color: var(--ur-dark-blue);
+    color: var(--ur-white);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  
+  main {
+    display: grid;
+    gap: 1.5rem;
+    padding: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  
+  .card {
+    background: var(--ur-white);
+    border-left: 6px solid var(--ur-blue);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  .card h2 {
+    margin-top: 0;
+    color: var(--ur-blue);
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 0.5rem;
+    font-family: inherit;
+  }
+  
+  button {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--ur-blue);
+    color: var(--ur-white);
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background-color: #005dc1;
+  }
+  
+  #tripStatus.pending {
+    color: #f39c12;
+    font-weight: bold;
+  }
+  
+  #tripStatus.in-progress {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  footer {
+    background-color: var(--ur-dark-blue);
+    color: var(--ur-white);
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+  

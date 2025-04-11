@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Driver Dashboard</title>
+  <link rel="stylesheet" href="driver-dashboard.css">
+</head>
+<body>
+  <header>
+    <h1> Driver Dashboard</h1>
+    <p>Welcome, Driver</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Today's Trip</h2>
+      <p><strong>From:</strong> Nyarugenge Campus</p>
+      <p><strong>To:</strong> Huye Campus</p>
+      <p><strong>Departure:</strong> 08:00 AM</p>
+      <p><strong>Status:</strong> <span id="tripStatus" class="pending">Pending</span></p>
+      <button onclick="startTrip()">Start Trip</button>
+    </section>
+
+    <section class="card">
+      <h2>Report Vehicle Issue</h2>
+      <textarea id="issueInput" placeholder="Describe any issue..." rows="4"></textarea>
+      <button onclick="reportIssue()">Submit Issue</button>
+    </section>
+
+    <section class="card">
+      <h2>Notifications</h2>
+      <ul id="notificationsList">
+        <li>License renewal due: April 18, 2025</li>
+        <li>Next maintenance: April 15, 2025</li>
+        <li>Assigned vehicle: Toyota Hiace (RAB 345Z)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 University of Rwanda - Fleet Management System
+  </footer>
+
+  <script src="driver-dashboard.js"></script>
+</body>
+</html>
