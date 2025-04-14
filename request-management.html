@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Management - UR Fleet Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <style>
+        .request-container {
+            padding: 20px;
+        }
+        
+        .request-filters {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .request-list {
+            margin-top: 20px;
+        }
+
+        .request-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .request-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--ur-dark-gray);
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: var(--ur-blue);
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .approve-btn {
+            background-color: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .approve-btn:hover {
+            background-color: #d4edda;
+        }
+
+        .decline-btn {
+            background-color: #fde8e8;
+            color: #c41e3a;
+        }
+
+        .decline-btn:hover {
+            background-color: #f8d7da;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-approved {
+            background-color: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .status-declined {
+            background-color: #fde8e8;
+            color: #c41e3a;
+        }
+
+        .comment-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        .vehicle-assignment {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .vehicle-selector {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="./image/logo_for_ur.png" alt="University of Rwanda Logo" class="logo">
+                <h2>FMS Admin</h2>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="admin-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="vehicles.html"><i class="fas fa-car"></i> Vehicles</a>
+                </li>
+                <li>
+                    <a href="drivers.html"><i class="fas fa-user"></i> Drivers</a>
+                </li>
+                <li class="active">
+                    <a href="request-management.html"><i class="fas fa-tasks"></i> Request Management</a>
+                </li>
+                <li>
+                    <a href="request-overview.html"><i class="fas fa-chart-pie"></i> Request Overview</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#profile"><i class="fas fa-user-circle"></i> Admin Profile</a>
+                <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search requests...">
+                </div>
+                <div class="user-info">
+                    <span class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </span>
+                    <div class="user-profile">
+                        <img src="./image/avatar.png" alt="Admin Profile">
+                        <span>Admin Name</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="request-container">
+                <!-- Request Filters -->
+                <div class="request-filters">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select>
+                            <option>All Requests</option>
+                            <option>Pending</option>
+                            <option>Approved</option>
+                            <option>Declined</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date Range:</label>
+                        <select>
+                            <option>Today</option>
+                            <option>This Week</option>
+                            <option>This Month</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Reason:</label>
+                        <select>
+                            <option>All Reasons</option>
+                            <option>Field Trip</option>
+                            <option>Official Meeting</option>
+                            <option>Campus Transfer</option>
+                            <option>Sports Event</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Request List -->
+                <div class="request-list">
+                    <div class="request-item">
+                        <div class="request-header">
+                            <h3>Request #VR-001</h3>
+                            <span class="status-badge status-pending">Pending Approval</span>
+                        </div>
+                        <div class="request-info">
+                            <div class="info-group">
+                                <span class="info-label">Requester</span>
+                                <span class="info-value">John Doe</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Department</span>
+                                <span class="info-value">Computer Science</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Reason</span>
+                                <span class="info-value">Field Trip</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Passengers</span>
+                                <span class="info-value">25</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Destination</span>
+                                <span class="info-value">Huye Campus</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Estimated Distance</span>
+                                <span class="info-value">150 km</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Start Date</span>
+                                <span class="info-value">2024-03-15</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">End Date</span>
+                                <span class="info-value">2024-03-15</span>
+                            </div>
+                        </div>
+
+                        <!-- Vehicle Assignment Section -->
+                        <div class="vehicle-assignment">
+                            <h4>Vehicle Assignment</h4>
+                            <select class="vehicle-selector">
+                                <option value="">Select Vehicle</option>
+                                <option value="UR-001">UR-001 - Toyota Coaster (30 seats)</option>
+                                <option value="UR-002">UR-002 - Toyota Coaster (30 seats)</option>
+                                <option value="UR-003">UR-003 - Toyota Hiace (15 seats)</option>
+                            </select>
+                        </div>
+
+                        <!-- Comment Section -->
+                        <div class="comment-section">
+                            <textarea class="comment-input" placeholder="Add a comment or reason for approval/decline..."></textarea>
+                        </div>
+
+                        <div class="request-actions">
+                            <button class="action-btn approve-btn">
+                                <i class="fas fa-check"></i> Approve Request
+                            </button>
+                            <button class="action-btn decline-btn">
+                                <i class="fas fa-times"></i> Decline Request
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="request-item">
+                        <div class="request-header">
+                            <h3>Request #VR-002</h3>
+                            <span class="status-badge status-approved">Approved</span>
+                        </div>
+                        <div class="request-info">
+                            <div class="info-group">
+                                <span class="info-label">Requester</span>
+                                <span class="info-value">Jane Smith</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Department</span>
+                                <span class="info-value">Engineering</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Reason</span>
+                                <span class="info-value">Official Meeting</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Passengers</span>
+                                <span class="info-value">8</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Destination</span>
+                                <span class="info-value">Nyagatare Campus</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Estimated Distance</span>
+                                <span class="info-value">100 km</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">Start Date</span>
+                                <span class="info-value">2024-03-16</span>
+                            </div>
+                            <div class="info-group">
+                                <span class="info-label">End Date</span>
+                                <span class="info-value">2024-03-16</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-assignment">
+                            <h4>Assigned Vehicle</h4>
+                            <p class="info-value">UR-003 - Toyota Hiace</p>
+                        </div>
+                        <div class="comment-section">
+                            <p><strong>Approval Comment:</strong> Vehicle assigned and driver notified.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Authentication check
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user name
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.querySelector('.user-profile span').textContent = username;
+            }
+
+            // Handle approve/decline buttons
+            document.querySelectorAll('.action-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.classList.contains('approve-btn') ? 'approve' : 'decline';
+                    const requestItem = this.closest('.request-item');
+                    const requestId = requestItem.querySelector('h3').textContent;
+                    const comment = requestItem.querySelector('.comment-input').value;
+                    const selectedVehicle = requestItem.querySelector('.vehicle-selector').value;
+                    
+                    if (action === 'approve' && !selectedVehicle) {
+                        alert('Please select a vehicle before approving the request.');
+                        return;
+                    }
+                    
+                    // Here you would typically make an API call to update the request status
+                    console.log(`${action} request ${requestId}`);
+                    console.log(`Comment: ${comment}`);
+                    if (selectedVehicle) {
+                        console.log(`Assigned Vehicle: ${selectedVehicle}`);
+                    }
+                    
+                    // Update UI to reflect the change
+                    const statusBadge = requestItem.querySelector('.status-badge');
+                    if (action === 'approve') {
+                        statusBadge.className = 'status-badge status-approved';
+                        statusBadge.textContent = 'Approved';
+                    } else {
+                        statusBadge.className = 'status-badge status-declined';
+                        statusBadge.textContent = 'Declined';
+                    }
+                    
+                    // Remove action buttons and make fields readonly
+                    requestItem.querySelector('.request-actions').remove();
+                    const commentInput = requestItem.querySelector('.comment-input');
+                    if (commentInput) {
+                        const commentText = comment || 'No comment provided';
+                        const commentDisplay = document.createElement('p');
+                        commentDisplay.innerHTML = `<strong>${action === 'approve' ? 'Approval' : 'Decline'} Comment:</strong> ${commentText}`;
+                        commentInput.parentNode.replaceChild(commentDisplay, commentInput);
+                    }
+                });
+            });
+        });
+
+        // Handle logout
+        document.querySelector('a[href="login.html"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html> 

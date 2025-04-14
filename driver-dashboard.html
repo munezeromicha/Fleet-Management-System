@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard - UR Fleet Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="driver-dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="./image/logo_for_ur.png" alt="University of Rwanda Logo" class="logo">
+                <h2>Driver Portal</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active">
+                    <a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#upcoming"><i class="fas fa-calendar"></i> Upcoming Trips</a>
+                </li>
+                <li>
+                    <a href="#assigned"><i class="fas fa-tasks"></i> Assigned Requests</a>
+                </li>
+                <li>
+                    <a href="#fuel"><i class="fas fa-gas-pump"></i> Fuel Reports</a>
+                </li>
+                <li>
+                    <a href="#issues"><i class="fas fa-exclamation-triangle"></i> Vehicle Issues</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#profile"><i class="fas fa-user-circle"></i> Profile</a>
+                <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search trips, requests...">
+                </div>
+                <div class="user-info">
+                    <span class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">2</span>
+                    </span>
+                    <div class="user-profile">
+                        <img src="./image/avatar.png" alt="Driver Profile">
+                        <span>Driver Name</span>
+                        <!-- User Dropdown Menu -->
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info-header">
+                                <img src="./image/avatar.png" alt="Driver Profile">
+                                <div class="user-details">
+                                    <h4>Driver Name</h4>
+                                    <p>ID: DRV-001</p>
+                                </div>
+                            </div>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="#profile" class="user-dropdown-item">
+                                <i class="fas fa-id-card"></i>
+                                Driver Information
+                            </a>
+                            <a href="#license" class="user-dropdown-item">
+                                <i class="fas fa-drivers-license"></i>
+                                License Details
+                            </a>
+                            <a href="#settings" class="user-dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </a>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="login.html" class="user-dropdown-item" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Stats Overview -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-route"></i>
+                        <div class="stat-info">
+                            <h3>Total Trips</h3>
+                            <p>145</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-road"></i>
+                        <div class="stat-info">
+                            <h3>Total KM Driven</h3>
+                            <p>2,567</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <div class="stat-info">
+                            <h3>Upcoming Trips</h3>
+                            <p>3</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="stat-info">
+                            <h3>Pending Issues</h3>
+                            <p>1</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Upcoming Trips -->
+                <section class="upcoming-trips">
+                    <h2>Upcoming Trips</h2>
+                    <div class="trips-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Trip ID</th>
+                                    <th>Date</th>
+                                    <th>Vehicle</th>
+                                    <th>Route</th>
+                                    <th>Start Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T790</td>
+                                    <td>2024-02-21</td>
+                                    <td>UR-003</td>
+                                    <td>Main Campus → Huye</td>
+                                    <td>09:00 AM</td>
+                                    <td><span class="status pending">Scheduled</span></td>
+                                    <td>
+                                        <button class="action-btn" title="Start Trip"><i class="fas fa-play"></i></button>
+                                        <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Trip Completion Form -->
+                <section class="trip-completion hidden" id="tripCompletionForm">
+                    <h2>Complete Trip</h2>
+                    <form id="completeTripForm">
+                        <div class="form-group">
+                            <label for="endKm">End Kilometer Reading:</label>
+                            <input type="number" id="endKm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tripNotes">Trip Notes:</label>
+                            <textarea id="tripNotes"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Submit</button>
+                            <button type="button" class="btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Vehicle Issues -->
+                <section class="vehicle-issues">
+                    <h2>Vehicle Issues</h2>
+                    <div class="issues-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Issue ID</th>
+                                    <th>Vehicle</th>
+                                    <th>Description</th>
+                                    <th>Reported Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>I123</td>
+                                    <td>UR-003</td>
+                                    <td>Brake noise during application</td>
+                                    <td>2024-02-20</td>
+                                    <td><span class="status pending">Under Review</span></td>
+                                    <td>
+                                        <button class="action-btn" title="Update"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn" title="View Details"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Authentication check
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+
+            if (!isLoggedIn || userRole !== 'driver') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Set driver name
+            const username = localStorage.getItem('username');
+            const userProfileName = document.querySelector('.user-profile span');
+            const userDropdownName = document.querySelector('.user-details h4');
+            if (username) {
+                userProfileName.textContent = username;
+                userDropdownName.textContent = username;
+            }
+
+            // User dropdown toggle
+            const userProfile = document.querySelector('.user-profile');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                userDropdown.classList.remove('show');
+            });
+
+            // Navigation handling
+            const navLinks = document.querySelectorAll('.nav-links li');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+
+            // Trip completion form handling
+            const startTripButtons = document.querySelectorAll('.action-btn[title="Start Trip"]');
+            const tripCompletionForm = document.getElementById('tripCompletionForm');
+            
+            startTripButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    tripCompletionForm.classList.remove('hidden');
+                });
+            });
+
+            // Handle trip completion submission
+            const completeTripForm = document.getElementById('completeTripForm');
+            completeTripForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const endKm = document.getElementById('endKm').value;
+                const notes = document.getElementById('tripNotes').value;
+                // Here you would handle the submission to your backend
+                console.log('Trip completed:', { endKm, notes });
+                tripCompletionForm.classList.add('hidden');
+            });
+
+            // Handle logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                localStorage.removeItem('userRole');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html> 
