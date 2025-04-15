@@ -17,10 +17,10 @@
       </div>
       <ul class="nav-links">
         <li class="active"><a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
-        <li><a href="#upcoming"><i class="fas fa-calendar"></i> Upcoming Trips</a></li>
-        <li><a href="#assigned"><i class="fas fa-tasks"></i> Assigned Requests</a></li>
-        <li><a href="#fuel"><i class="fas fa-gas-pump"></i> Fuel Reports</a></li>
-        <li><a href="#issues"><i class="fas fa-exclamation-triangle"></i> Vehicle Issues</a></li>
+        <li><a href="#availability"><i class="fas fa-calendar-check"></i> Confirm Availability</a></li>
+        <li><a href="#confirmed"><i class="fas fa-clipboard-check"></i> Confirmed Request</a></li>
+        <li><a href="#fuel"><i class="fas fa-gas-pump"></i> Fuel Reporting</a></li>
+        <li><a href="#issues"><i class="fas fa-exclamation-triangle"></i> Vehicle Issue Reporting</a></li>
       </ul>
       <div class="sidebar-footer">
         <a href="#profile"><i class="fas fa-user-circle"></i> Profile</a>
@@ -62,34 +62,61 @@
       <div class="dashboard-content">
         <!-- Quick Access Cards -->
         <section class="stats-grid" id="dashboard">
-          <a href="#upcoming" class="stat-card">
-            <i class="fas fa-calendar"></i>
+          <a href="confirm-availability.html" class="stat-card">
+            <i class="fas fa-calendar-check"></i>
             <div class="stat-info">
-              <h3>Upcoming Trips</h3>
-              <p>View</p>
+              <h3>Confirm Availability</h3>
             </div>
           </a>
-          <a href="#assigned" class="stat-card">
-            <i class="fas fa-tasks"></i>
+          <a href="confirmed-requests.html" class="stat-card">
+            <i class="fas fa-clipboard-check"></i>
             <div class="stat-info">
-              <h3>Assigned Requests</h3>
-              <p>View</p>
+              <h3>Confirmed Request</h3>
             </div>
           </a>
-          <a href="#fuel" class="stat-card">
+          <a href="fuel-reporting.html" class="stat-card">
             <i class="fas fa-gas-pump"></i>
             <div class="stat-info">
-              <h3>Fuel Reports</h3>
-              <p>View</p>
+              <h3>Fuel Reporting</h3>
             </div>
           </a>
-          <a href="#issues" class="stat-card">
+          <a href="vehicle-issues.html" class="stat-card">
             <i class="fas fa-exclamation-triangle"></i>
             <div class="stat-info">
-              <h3>Vehicle Issues</h3>
-              <p>View</p>
+              <h3>Vehicle Issue Reporting</h3>
             </div>
           </a>
+        </section>
+
+        <!-- Graphs Section -->
+        <section class="graphs-container">
+          <div class="graph-card">
+            <div class="graph-header">
+              <h3 class="graph-title">Monthly Trip Statistics</h3>
+              <div class="graph-actions">
+                <button class="action-btn"><i class="fas fa-download"></i></button>
+                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <div class="graph-content">
+              <!-- Graph will be rendered here -->
+              <canvas id="tripStatsChart"></canvas>
+            </div>
+          </div>
+
+          <div class="graph-card">
+            <div class="graph-header">
+              <h3 class="graph-title">Vehicle Performance</h3>
+              <div class="graph-actions">
+                <button class="action-btn"><i class="fas fa-download"></i></button>
+                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+              </div>
+            </div>
+            <div class="graph-content">
+              <!-- Graph will be rendered here -->
+              <canvas id="vehiclePerformanceChart"></canvas>
+            </div>
+          </div>
         </section>
 
         <!-- STATS GRID, TRIPS, REQUESTS, FUEL, ISSUES (UNCHANGED) -->
@@ -97,6 +124,7 @@
     </main>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -137,6 +165,59 @@
         localStorage.removeItem('username');
         localStorage.removeItem('userRole');
         window.location.href = 'login.html';
+      });
+
+      // Initialize Charts
+      const tripStatsCtx = document.getElementById('tripStatsChart').getContext('2d');
+      const vehiclePerformanceCtx = document.getElementById('vehiclePerformanceChart').getContext('2d');
+
+      // Monthly Trip Statistics Chart
+      new Chart(tripStatsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Completed Trips',
+            data: [12, 19, 15, 17, 20, 18],
+            backgroundColor: 'rgba(0, 51, 102, 0.7)',
+            borderColor: 'rgba(0, 51, 102, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Vehicle Performance Chart
+      new Chart(vehiclePerformanceCtx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [{
+            label: 'Fuel Efficiency (km/L)',
+            data: [12, 11.5, 12.2, 11.8],
+            backgroundColor: 'rgba(196, 30, 58, 0.2)',
+            borderColor: 'rgba(196, 30, 58, 1)',
+            borderWidth: 2,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
       });
     });
   </script>

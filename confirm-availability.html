@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirm Availability - UR Fleet Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <link rel="stylesheet" href="driver-dashboard.css"/>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <img src="./image/logo_for_ur.png" alt="University of Rwanda Logo" class="logo" />
+        <h2>Driver Portal</h2>
+      </div>
+      <ul class="nav-links">
+        <li><a href="driver-dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li class="active"><a href="confirm-availability.html"><i class="fas fa-calendar-check"></i> Confirm Availability</a></li>
+        <li><a href="confirmed-requests.html"><i class="fas fa-clipboard-check"></i> Confirmed Request</a></li>
+        <li><a href="fuel-reporting.html"><i class="fas fa-gas-pump"></i> Fuel Reporting</a></li>
+        <li><a href="vehicle-issues.html"><i class="fas fa-exclamation-triangle"></i> Vehicle Issue Reporting</a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="#profile"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-bar">
+        <div class="user-info">
+          <span class="notifications">
+            <i class="fas fa-bell"></i>
+            <span class="badge">2</span>
+          </span>
+          <div class="user-profile">
+            <img src="./image/avatar.png" alt="Driver Profile" />
+            <span>Driver Name</span>
+            <div class="user-dropdown" id="userDropdown">
+              <div class="user-info-header">
+                <img src="./image/avatar.png" alt="Driver Profile" />
+                <div class="user-details">
+                  <h4>Driver Name</h4>
+                  <p>ID: DRV-001</p>
+                </div>
+              </div>
+              <div class="user-dropdown-divider"></div>
+              <a href="#profile" class="user-dropdown-item"><i class="fas fa-id-card"></i> Driver Information</a>
+              <a href="#license" class="user-dropdown-item"><i class="fas fa-drivers-license"></i> License Details</a>
+              <a href="#settings" class="user-dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <div class="user-dropdown-divider"></div>
+              <a href="login.html" class="user-dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-section">
+        <h2>Confirm Your Availability</h2>
+        <div class="availability-form">
+          <div class="form-group">
+            <label for="date">Select Date</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Available Time Slots</label>
+            <div class="time-slots">
+              <div class="time-slot">
+                <input type="checkbox" id="morning" name="time-slot">
+                <label for="morning">Morning (8:00 AM - 12:00 PM)</label>
+              </div>
+              <div class="time-slot">
+                <input type="checkbox" id="afternoon" name="time-slot">
+                <label for="afternoon">Afternoon (1:00 PM - 5:00 PM)</label>
+              </div>
+              <div class="time-slot">
+                <input type="checkbox" id="evening" name="time-slot">
+                <label for="evening">Evening (6:00 PM - 10:00 PM)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Add any special notes or conditions..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Submit Availability</button>
+            <button type="button" class="btn-secondary">Cancel</button>
+          </div>
+        </div>
+
+        <div class="availability-calendar">
+          <h3>Your Availability Calendar</h3>
+          <div class="calendar-view">
+            <!-- Calendar will be rendered here -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // ... existing authentication code ...
+
+      // Initialize date picker with minimum date as today
+      const dateInput = document.getElementById('date');
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+
+      // Handle form submission
+      const availabilityForm = document.querySelector('.availability-form');
+      availabilityForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Add your form submission logic here
+        alert('Availability submitted successfully!');
+      });
+    });
+  </script>
+</body>
+</html> 
