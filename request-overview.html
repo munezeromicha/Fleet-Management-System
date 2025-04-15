@@ -160,19 +160,15 @@
             margin-bottom: 0;
         }
 
-        .metric-col {
-            flex: 1;
-            text-align: center;
-        }
-
-        .metric-col label {
+        
+         label {
             display: block;
             color: var(--ur-dark-gray);
             font-size: 0.9rem;
             margin-bottom: 5px;
         }
 
-        .metric-col .metric-value {
+         .metric-value {
             font-size: 1.2rem;
             font-weight: 500;
             color: var(--ur-blue);
@@ -335,7 +331,7 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="top-bar">
-                <div class="search-bar">
+            <div class="search-bar">
                 </div>
                 <div class="user-info">
                     <span class="notifications">
@@ -513,10 +509,7 @@
                                         <label>Efficiency</label>
                                         <div class="metric-value highlight" id="fuelEfficiency">--</div>
                                     </div>
-                                    <div class="metric-col">
-                                        <label>Cost Savings</label>
-                                        <div class="metric-value" id="costSavings">--</div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <canvas id="fuelChart"></canvas>
@@ -624,7 +617,7 @@
                     document.getElementById('expectedFuel').textContent = data.expectedFuel;
                     document.getElementById('actualFuel').textContent = data.actualFuel;
                     document.getElementById('fuelEfficiency').textContent = data.fuelEfficiency;
-                    document.getElementById('costSavings').textContent = data.costSavings;
+                
 
                     // Update charts
                     updateCharts(requestId);
