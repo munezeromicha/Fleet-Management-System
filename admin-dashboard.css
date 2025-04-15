@@ -126,7 +126,7 @@ body {
     margin-bottom: 2rem;
 }
 
-.search-bar {
+/*.search-bar {
     display: flex;
     align-items: center;
     background-color: var(--ur-light-gray);
@@ -146,7 +146,7 @@ body {
     outline: none;
     width: 100%;
 }
-
+*/
 .user-info {
     display: flex;
     align-items: center;
