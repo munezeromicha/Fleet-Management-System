@@ -966,4 +966,300 @@ small {
     .btn-secondary {
         width: 100%;
     }
+}
+
+.form-section {
+    background-color: var(--ur-white);
+    border: 1px solid var(--ur-light-gray);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-section h4 {
+    color: var(--ur-blue);
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.form-section .form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Update existing form styles */
+.fuel-report-form {
+    background-color: var(--ur-white);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--ur-dark);
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--ur-light-gray);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input[type="file"] {
+    padding: 0.5rem 0;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--ur-blue);
+    color: white;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: var(--ur-light-gray);
+    color: var(--ur-dark);
+    border: 1px solid var(--ur-gray);
+}
+
+.btn-primary:hover {
+    background-color: var(--ur-dark-blue);
+}
+
+.btn-secondary:hover {
+    background-color: var(--ur-gray);
+}
+
+/* History Section Styles */
+.history-section {
+    background-color: var(--ur-white);
+    border: 1px solid var(--ur-light-gray);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.history-section h4 {
+    color: var(--ur-blue);
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.history-section:last-child {
+    margin-bottom: 0;
+}
+
+.history-table {
+    overflow-x: auto;
+    margin: 0;
+    border-radius: 4px;
+}
+
+.history-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.history-table th {
+    background-color: var(--ur-light-gray);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--ur-dark-gray);
+    white-space: nowrap;
+}
+
+.history-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--ur-light-gray);
+    white-space: nowrap;
+}
+
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+.history-table tbody tr:hover {
+    background-color: var(--ur-light-gray);
+}
+
+@media (max-width: 768px) {
+    .history-section {
+        padding: 1rem;
+    }
+
+    .history-table {
+        margin: 0 -1rem;
+        border-radius: 0;
+    }
+
+    .history-table table {
+        font-size: 0.9rem;
+    }
+
+    .history-table th,
+    .history-table td {
+        padding: 0.75rem;
+    }
+}
+
+/* Journey Cards Layout */
+.journey-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.journey-card {
+    background-color: var(--ur-white);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.journey-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-header i {
+    font-size: 1.5rem;
+    color: var(--ur-blue);
+}
+
+.card-header h3 {
+    margin: 0;
+    color: var(--ur-blue);
+    font-size: 1.25rem;
+}
+
+.start-journey {
+    border-top: 4px solid #4CAF50;
+}
+
+.end-journey {
+    border-top: 4px solid #F44336;
+}
+
+/* Journey History Grid */
+.journey-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.journey-record {
+    background-color: var(--ur-white);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.journey-record:hover {
+    transform: translateY(-3px);
+}
+
+.record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.record-header h4 {
+    margin: 0;
+    color: var(--ur-blue);
+    font-size: 1.1rem;
+}
+
+.record-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--ur-dark-gray);
+}
+
+.detail-item i {
+    width: 20px;
+    color: var(--ur-blue);
+    opacity: 0.8;
+}
+
+/* Journey Form Styles */
+.journey-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.journey-form .form-actions {
+    margin-top: 1.5rem;
+}
+
+.journey-form .btn-primary {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .journey-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .journey-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .journey-card,
+    .journey-record {
+        padding: 1rem;
+    }
 } 

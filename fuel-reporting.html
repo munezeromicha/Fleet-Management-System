@@ -59,96 +59,144 @@
       </header>
 
       <div class="content-section">
-        <h2>Fuel Reporting</h2>
+        <h2>Journey Tracking</h2>
         
-        <form class="fuel-report-form" id="fuelForm">
-          <div class="form-group">
-            <label for="vehicle">Vehicle</label>
-            <select id="vehicle" name="vehicle" required>
-              <option value="">Select Vehicle</option>
-              <option value="UR-001">UR-001 (Toyota Hiace)</option>
-              <option value="UR-002">UR-002 (Toyota Coaster)</option>
-              <option value="UR-003">UR-003 (Toyota Hiace)</option>
-            </select>
+        <div class="journey-cards">
+          <div class="journey-card start-journey">
+            <div class="card-header">
+              <i class="fas fa-play-circle"></i>
+              <h3>Start Journey</h3>
+            </div>
+            <form class="journey-form" id="startJourneyForm">
+              <div class="form-group">
+                <label for="vehicle">Vehicle</label>
+                <select id="vehicle" name="vehicle" required>
+                  <option value="">Select Vehicle</option>
+                  <option value="UR-001">UR-001 (Toyota Hiace)</option>
+                  <option value="UR-002">UR-002 (Toyota Coaster)</option>
+                  <option value="UR-003">UR-003 (Toyota Hiace)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+              </div>
+
+              <div class="form-group">
+                <label for="initialOdometer">Initial Odometer Reading (km)</label>
+                <input type="number" id="initialOdometer" name="initialOdometer" required>
+              </div>
+
+              <div class="form-group">
+                <label for="initialFuel">Initial Fuel Level (Liters)</label>
+                <input type="number" id="initialFuel" name="initialFuel" step="0.01" required>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">Start Journey</button>
+              </div>
+            </form>
           </div>
 
-          <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
-          </div>
+          <div class="journey-card end-journey">
+            <div class="card-header">
+              <i class="fas fa-stop-circle"></i>
+              <h3>End Journey</h3>
+            </div>
+            <form class="journey-form" id="endJourneyForm">
+              <div class="form-group">
+                <label for="vehicle-end">Vehicle</label>
+                <select id="vehicle-end" name="vehicle" required>
+                  <option value="">Select Vehicle</option>
+                  <option value="UR-001">UR-001 (Toyota Hiace)</option>
+                  <option value="UR-002">UR-002 (Toyota Coaster)</option>
+                  <option value="UR-003">UR-003 (Toyota Hiace)</option>
+                </select>
+              </div>
 
-          <div class="form-group">
-            <label for="odometer">Odometer Reading (km)</label>
-            <input type="number" id="odometer" name="odometer" required>
-          </div>
+              <div class="form-group">
+                <label for="date-end">Date</label>
+                <input type="date" id="date-end" name="date" required>
+              </div>
 
-          <div class="form-group">
-            <label for="fuelAmount">Fuel Amount (Liters)</label>
-            <input type="number" id="fuelAmount" name="fuelAmount" step="0.01" required>
-          </div>
+              <div class="form-group">
+                <label for="finalOdometer">Final Odometer Reading (km)</label>
+                <input type="number" id="finalOdometer" name="finalOdometer" required>
+              </div>
 
-          <div class="form-group">
-            <label for="fuelCost">Fuel Cost (RWF)</label>
-            <input type="number" id="fuelCost" name="fuelCost" required>
-          </div>
+              <div class="form-group">
+                <label for="finalFuel">Final Fuel Level (Liters)</label>
+                <input type="number" id="finalFuel" name="finalFuel" step="0.01" required>
+              </div>
 
-          <div class="form-group">
-            <label for="fuelStation">Fuel Station</label>
-            <input type="text" id="fuelStation" name="fuelStation" required>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">End Journey</button>
+              </div>
+            </form>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="receipt">Upload Receipt</label>
-            <input type="file" id="receipt" name="receipt" accept="image/*,.pdf">
-          </div>
+        <div class="journey-history">
+          <h3>Recent Journeys</h3>
+          <div class="journey-grid">
+            <div class="journey-record">
+              <div class="record-header">
+                <h4>Journey #JR-001</h4>
+                <span class="status completed">Completed</span>
+              </div>
+              <div class="record-details">
+                <div class="detail-item">
+                  <i class="fas fa-car"></i>
+                  <span>UR-001 (Toyota Hiace)</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>2024-03-10</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-road"></i>
+                  <span>Distance: 200 km</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>45,678 km → 45,878 km</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-gas-pump"></i>
+                  <span>45.0 L → 25.5 L</span>
+                </div>
+              </div>
+            </div>
 
-          <div class="form-group">
-            <label for="notes">Additional Notes</label>
-            <textarea id="notes" name="notes" rows="3" placeholder="Add any additional information..."></textarea>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn-primary">Submit Report</button>
-            <button type="button" class="btn-secondary" onclick="window.location.href='driver-dashboard.html'">Cancel</button>
-          </div>
-        </form>
-
-        <div class="fuel-history">
-          <h3>Recent Fuel Reports</h3>
-          <div class="history-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Vehicle</th>
-                  <th>Odometer</th>
-                  <th>Fuel Amount</th>
-                  <th>Cost</th>
-                  <th>Station</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>2024-03-10</td>
-                  <td>UR-001</td>
-                  <td>45,678</td>
-                  <td>40.5 L</td>
-                  <td>65,000 RWF</td>
-                  <td>Total Energies</td>
-                  <td><span class="status completed">Approved</span></td>
-                </tr>
-                <tr>
-                  <td>2024-03-05</td>
-                  <td>UR-002</td>
-                  <td>32,456</td>
-                  <td>35.0 L</td>
-                  <td>56,000 RWF</td>
-                  <td>Shell</td>
-                  <td><span class="status pending">Pending</span></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="journey-record">
+              <div class="record-header">
+                <h4>Journey #JR-002</h4>
+                <span class="status completed">Completed</span>
+              </div>
+              <div class="record-details">
+                <div class="detail-item">
+                  <i class="fas fa-car"></i>
+                  <span>UR-002 (Toyota Coaster)</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>2024-03-05</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-road"></i>
+                  <span>Distance: 200 km</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>32,456 km → 32,656 km</span>
+                </div>
+                <div class="detail-item">
+                  <i class="fas fa-gas-pump"></i>
+                  <span>50.0 L → 30.0 L</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -157,15 +205,57 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // ... existing authentication code ...
-
       // Initialize date picker with today's date
       const dateInput = document.getElementById('date');
       const today = new Date().toISOString().split('T')[0];
       dateInput.value = today;
 
-      // Handle form submission
+      // Handle form validation and submission
       const fuelForm = document.getElementById('fuelForm');
+      
+      // Add event listeners for odometer validation
+      const initialOdometer = document.getElementById('initialOdometer');
+      const finalOdometer = document.getElementById('finalOdometer');
+      const initialFuel = document.getElementById('initialFuel');
+      const finalFuel = document.getElementById('finalFuel');
+
+      finalOdometer.addEventListener('input', function() {
+        const initial = parseFloat(initialOdometer.value) || 0;
+        const final = parseFloat(this.value) || 0;
+        
+        if (final < initial) {
+          this.setCustomValidity('Final odometer reading must be greater than initial reading');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+
+      initialOdometer.addEventListener('input', function() {
+        if (finalOdometer.value) {
+          const initial = parseFloat(this.value) || 0;
+          const final = parseFloat(finalOdometer.value) || 0;
+          
+          if (final < initial) {
+            finalOdometer.setCustomValidity('Final odometer reading must be greater than initial reading');
+          } else {
+            finalOdometer.setCustomValidity('');
+          }
+        }
+      });
+
+      // Add event listeners for fuel validation
+      finalFuel.addEventListener('input', function() {
+        const initial = parseFloat(initialFuel.value) || 0;
+        const final = parseFloat(this.value) || 0;
+        
+        if (final > initial) {
+          this.setCustomValidity('Final fuel level should not be greater than initial fuel level unless fuel was added');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+
+      // Handle form submission
       fuelForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -173,11 +263,26 @@
         const formData = new FormData(fuelForm);
         const data = Object.fromEntries(formData.entries());
         
+        // Calculate distance and fuel consumption
+        const initialOdo = parseFloat(data.initialOdometer) || 0;
+        const finalOdo = parseFloat(data.finalOdometer) || 0;
+        const distance = finalOdo - initialOdo;
+        
+        const initialFuelLevel = parseFloat(data.initialFuel) || 0;
+        const finalFuelLevel = parseFloat(data.finalFuel) || 0;
+        const fuelAdded = parseFloat(data.fuelAmount) || 0;
+        const fuelUsed = initialFuelLevel - finalFuelLevel + fuelAdded;
+        
+        // Add calculated values to data
+        data.distance = distance;
+        data.fuelUsed = fuelUsed;
+        data.fuelEfficiency = distance > 0 ? (fuelUsed / distance * 100).toFixed(2) : 0; // L/100km
+        
         // Here you would typically send the data to your backend
         console.log('Form data:', data);
         
-        // Show success message
-        alert('Fuel report submitted successfully!');
+        // Show success message with fuel efficiency
+        alert(`Fuel report submitted successfully!\nDistance: ${distance} km\nFuel Used: ${fuelUsed.toFixed(2)} L\nFuel Efficiency: ${data.fuelEfficiency} L/100km`);
         
         // Optionally redirect to dashboard or refresh the page
         // window.location.href = 'driver-dashboard.html';
