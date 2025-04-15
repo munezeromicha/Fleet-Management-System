@@ -168,6 +168,13 @@
             border-radius: 5px;
             margin-top: 5px;
         }
+        .driver-selector {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -306,6 +313,15 @@
                                 <option value="UR-003">UR-003 - Toyota Hiace (15 seats)</option>
                             </select>
                         </div>
+                        <div class="driver-assignment">
+                            <h4>Driver Assignment</h4>
+                            <select class="driver-selector">
+                                <option value="">Select Driver</option>
+                                <option value="Kalisa-Rugano">Kalisa-Rugano</option>
+                                <option value="Rukara-Nzeyumwami">Rukara-Nzeyumwami</option>
+                                <option value="Mabano-Muneza">Mabano-Muneza</option>
+                            </select>
+                        </div>
 
                         <!-- Comment Section -->
                         <div class="comment-section">
@@ -397,6 +413,7 @@
                     const requestId = requestItem.querySelector('h3').textContent;
                     const comment = requestItem.querySelector('.comment-input').value;
                     const selectedVehicle = requestItem.querySelector('.vehicle-selector').value;
+                    const selectedDriver = requestItem.querySelector('.driver-selector').value;
                     
                     if (action === 'approve' && !selectedVehicle) {
                         alert('Please select a vehicle before approving the request.');
