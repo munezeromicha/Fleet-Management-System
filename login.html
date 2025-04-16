@@ -160,36 +160,13 @@
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('remember').checked;
             
-            // Define user credentials and their respective dashboards
-            const users = {
-                admin: {
-                    password: 'admin123',
-                    role: 'admin',
-                    dashboard: 'admin-dashboard.html',
-                    name: 'Administrator'
-                },
-                driver: {
-                    password: 'driver123',
-                    role: 'driver',
-                    dashboard: 'driver-dashboard.html',
-                    name: 'Driver'
-                },
-                staff: {
-                    password: 'staff123',
-                    role: 'staff',
-                    dashboard: 'staff-dashboard.html',
-                    name: 'Staff Member'
-                }
-            };
-
-            // Check if user exists and credentials match
-            const user = users[username];
-            if (user && user.password === password) {
+            // Only check for system admin credentials
+            if (username === 'superAdmin' && password === 'superAdmin123') {
                 try {
                     // Store login state and user information
                     localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('username', user.name);
-                    localStorage.setItem('userRole', user.role);
+                    localStorage.setItem('username', 'System Administrator');
+                    localStorage.setItem('userRole', 'system_admin');
                     
                     // If remember me is checked, store the username
                     if (rememberMe) {
@@ -201,8 +178,8 @@
                     // Add login timestamp
                     localStorage.setItem('lastLogin', new Date().toISOString());
 
-                    // Redirect to appropriate dashboard
-                    window.location.href = user.dashboard;
+                    // Redirect to system admin dashboard
+                    window.location.href = 'system-admin-dashboard.html';
                 } catch (error) {
                     console.error('Error during login:', error);
                     alert('Error during login. Please try again.');
@@ -235,13 +212,8 @@
             // Check if user is already logged in
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const userRole = localStorage.getItem('userRole');
-            if (isLoggedIn && userRole) {
-                const users = {
-                    admin: 'admin-dashboard.html',
-                    driver: 'driver-dashboard.html',
-                    staff: 'staff-dashboard.html'
-                };
-                window.location.href = users[userRole];
+            if (isLoggedIn && userRole === 'system_admin') {
+                window.location.href = 'system-admin-dashboard.html';
             }
         });
 
