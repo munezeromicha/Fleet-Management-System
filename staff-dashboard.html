@@ -18,16 +18,16 @@
             </div>
             <ul class="nav-links">
                 <li class="active" data-page="dashboard">
-                    <a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="staff-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li data-page="vehicle-requests">
-                    <a href="#vehicle-requests"><i class="fas fa-car"></i> Vehicle Requests</a>
+                    <a href="vehicle-requests.html"><i class="fas fa-car"></i> Vehicle Requests</a>
                 </li>
                 <li data-page="trip-history">
-                    <a href="#trip-history"><i class="fas fa-history"></i> Trip History</a>
+                    <a href="trip-history.html"><i class="fas fa-history"></i> Trip History</a>
                 </li>
                 <li data-page="notifications">
-                    <a href="#notifications"><i class="fas fa-bell"></i> Notifications</a>
+                    <a href="notifications.html"><i class="fas fa-bell"></i> Notifications</a>
                 </li>
             </ul>
             <div class="sidebar-footer">
@@ -55,147 +55,112 @@
                 </div>
             </header>
 
-            <!-- Content Pages -->
+            <!-- Dashboard Overview -->
             <div class="dashboard-content">
-                <!-- Dashboard Overview -->
-                <div class="content-page active" id="dashboard-page">
-                    <!-- Quick Stats -->
-                    <section class="stats-grid">
-                        <div class="stat-card">
-                            <i class="fas fa-car"></i>
-                            <div class="stat-info">
-                                <h3>Pending Requests</h3>
-                                <p>3</p>
-                            </div>
+                <!-- Quick Stats -->
+                <section class="stats-grid">
+                    <a href="vehicle-requests.html?filter=pending" class="stat-card">
+                        <i class="fas fa-car"></i>
+                        <div class="stat-info">
+                            <h3>Pending Requests</h3>
+                            <p>3</p>
                         </div>
-                        <div class="stat-card">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="stat-info">
-                                <h3>Approved Requests</h3>
-                                <p>12</p>
-                            </div>
+                    </a>
+                    <a href="vehicle-requests.html?filter=approved" class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-info">
+                            <h3>Approved Requests</h3>
+                            <p>12</p>
                         </div>
-                        <div class="stat-card">
-                            <i class="fas fa-road"></i>
-                            <div class="stat-info">
-                                <h3>Completed Trips</h3>
-                                <p>8</p>
-                            </div>
+                    </a>
+                    <a href="trip-history.html?filter=completed" class="stat-card">
+                        <i class="fas fa-road"></i>
+                        <div class="stat-info">
+                            <h3>Completed Trips</h3>
+                            <p>8</p>
                         </div>
-                        <div class="stat-card">
-                            <i class="fas fa-times-circle"></i>
-                            <div class="stat-info">
-                                <h3>Rejected Requests</h3>
-                                <p>2</p>
-                            </div>
+                    </a>
+                    <a href="vehicle-requests.html?filter=rejected" class="stat-card">
+                        <i class="fas fa-times-circle"></i>
+                        <div class="stat-info">
+                            <h3>Rejected Requests</h3>
+                            <p>2</p>
                         </div>
-                    </section>
+                    </a>
+                </section>
 
-                    <!-- Recent Vehicle Requests -->
-                    <section class="recent-requests">
+                <!-- User Statistics Graphs -->
+                <section class="graphs-section">
+                    <div class="graph-container">
+                        <h3>Monthly Trip Requests</h3>
+                        <canvas id="monthlyRequestsChart"></canvas>
+                    </div>
+                    <div class="graph-container">
+                        <h3>Request Status Distribution</h3>
+                        <canvas id="statusDistributionChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Recent Vehicle Requests -->
+                <section class="recent-requests">
+                    <div class="section-header">
                         <h2>Recent Vehicle Requests</h2>
-                        <div class="requests-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Request ID</th>
-                                        <th>Date</th>
-                                        <th>Purpose</th>
-                                        <th>Destination</th>
-                                        <th>Passengers</th>
-                                        <th>Status</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>REQ-001</td>
-                                        <td>2024-02-22</td>
-                                        <td>Field Trip</td>
-                                        <td>Huye Campus</td>
-                                        <td>15</td>
-                                        <td><span class="status pending">Pending</span></td>
-                                        <td>2024-02-23</td>
-                                        <td>2024-02-23</td>
-                                        <td>
-                                            <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                            <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>REQ-002</td>
-                                        <td>2024-02-21</td>
-                                        <td>Conference</td>
-                                        <td>Kigali Convention Center</td>
-                                        <td>4</td>
-                                        <td><span class="status approved">Approved</span></td>
-                                        <td>2024-02-22</td>
-                                        <td>2024-02-22</td>
-                                        <td>
-                                            <button class="action-btn" title="View"><i class="fas fa-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <!-- New Request Form -->
-                    <section class="new-request">
-                        <h2>Create New Vehicle Request</h2>
-                        <form class="request-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Purpose of Trip</label>
-                                    <input type="text" placeholder="Enter trip purpose">
-                                </div>
-                                <div class="form-group">
-                                    <label>Destination</label>
-                                    <input type="text" placeholder="Enter destination">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Number of Passengers</label>
-                                    <input type="number" min="1" placeholder="Enter number of passengers">
-                                </div>
-                                <div class="form-group">
-                                    <label>Preferred Date</label>
-                                    <input type="date">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Additional Notes</label>
-                                    <textarea placeholder="Enter any additional information"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn-primary">Submit Request</button>
-                                <button type="reset" class="btn-secondary">Clear Form</button>
-                            </div>
-                        </form>
-                    </section>
-                </div>
-
-                <!-- Other content pages will be added similarly -->
-                <div class="content-page" id="vehicle-requests-page">
-                    <!-- Vehicle Requests content -->
-                </div>
-
-                <div class="content-page" id="trip-history-page">
-                    <!-- Trip History content -->
-                </div>
-
-                <div class="content-page" id="notifications-page">
-                    <!-- Notifications content -->
-                </div>
+                        <a href="new-request.html" class="btn-primary">
+                            <i class="fas fa-plus"></i> New Request
+                        </a>
+                    </div>
+                    <div class="requests-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>Date</th>
+                                    <th>Purpose</th>
+                                    <th>Destination</th>
+                                    <th>Passengers</th>
+                                    <th>Status</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>REQ-001</td>
+                                    <td>2024-02-22</td>
+                                    <td>Field Trip</td>
+                                    <td>Huye Campus</td>
+                                    <td>15</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td>2024-02-23</td>
+                                    <td>2024-02-23</td>
+                                    <td>
+                                        <a href="view-request.html?id=REQ-001" class="action-btn" title="View"><i class="fas fa-eye"></i></a>
+                                        <a href="edit-request.html?id=REQ-001" class="action-btn" title="Edit"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>REQ-002</td>
+                                    <td>2024-02-21</td>
+                                    <td>Conference</td>
+                                    <td>Kigali Convention Center</td>
+                                    <td>4</td>
+                                    <td><span class="status approved">Approved</span></td>
+                                    <td>2024-02-22</td>
+                                    <td>2024-02-22</td>
+                                    <td>
+                                        <a href="view-request.html?id=REQ-002" class="action-btn" title="View"><i class="fas fa-eye"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Authentication and role verification
         document.addEventListener('DOMContentLoaded', function() {
@@ -215,32 +180,6 @@
                 userProfileName.textContent = username;
             }
 
-            // Navigation handling
-            const navLinks = document.querySelectorAll('.nav-links li');
-            const contentPages = document.querySelectorAll('.content-page');
-
-            function showPage(pageId) {
-                contentPages.forEach(page => page.classList.remove('active'));
-                navLinks.forEach(link => link.classList.remove('active'));
-                
-                const targetPage = document.getElementById(pageId + '-page');
-                const targetLink = document.querySelector(`[data-page="${pageId}"]`);
-                
-                if (targetPage) targetPage.classList.add('active');
-                if (targetLink) targetLink.classList.add('active');
-            }
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const pageId = link.dataset.page;
-                    if (pageId) {
-                        showPage(pageId);
-                        window.location.hash = pageId;
-                    }
-                });
-            });
-
             // Handle logout
             const logoutButton = document.querySelector('.sidebar-footer a[href="login.html"]');
             if (logoutButton) {
@@ -253,8 +192,60 @@
                 });
             }
 
-            const initialPage = window.location.hash.substring(1) || 'dashboard';
-            showPage(initialPage);
+            // Initialize charts
+            function initializeCharts() {
+                // Monthly Requests Chart
+                const monthlyRequestsCtx = document.getElementById('monthlyRequestsChart').getContext('2d');
+                new Chart(monthlyRequestsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Trip Requests',
+                            data: [12, 19, 15, 8, 10, 14],
+                            borderColor: '#3498db',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                });
+
+                // Status Distribution Chart
+                const statusDistributionCtx = document.getElementById('statusDistributionChart').getContext('2d');
+                new Chart(statusDistributionCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pending', 'Approved', 'Completed', 'Rejected'],
+                        datasets: [{
+                            data: [3, 12, 8, 2],
+                            backgroundColor: [
+                                '#f1c40f',
+                                '#2ecc71',
+                                '#3498db',
+                                '#e74c3c'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Initialize charts
+            initializeCharts();
         });
     </script>
 </body>

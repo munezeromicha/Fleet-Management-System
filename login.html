@@ -50,7 +50,7 @@
         
         <div class="login-form-container">
             <h2><i class="fas fa-user-lock"></i> Login</h2>
-            <form class="login-form">
+            <form class="login-form" id="loginForm">
                 <div class="form-group">
                     <label for="username"><i class="fas fa-user"></i> Username</label>
                     <input type="text" id="username" name="username" placeholder="Enter your username" required>
@@ -152,29 +152,33 @@
         });
 
         // Handle login form submission
-        document.querySelector('.login-form').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             showLoading();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember').checked;
             
             // Define user credentials and their respective dashboards
             const users = {
                 admin: {
                     password: 'admin123',
                     role: 'admin',
-                    dashboard: 'admin-dashboard.html'
+                    dashboard: 'admin-dashboard.html',
+                    name: 'Administrator'
                 },
                 driver: {
                     password: 'driver123',
                     role: 'driver',
-                    dashboard: 'driver-dashboard.html'
+                    dashboard: 'driver-dashboard.html',
+                    name: 'Driver'
                 },
                 staff: {
                     password: 'staff123',
                     role: 'staff',
-                    dashboard: 'staff-dashboard.html'
+                    dashboard: 'staff-dashboard.html',
+                    name: 'Staff Member'
                 }
             };
 
@@ -182,12 +186,22 @@
             const user = users[username];
             if (user && user.password === password) {
                 try {
-                    // Store login state and user role
+                    // Store login state and user information
                     localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('username', username);
+                    localStorage.setItem('username', user.name);
                     localStorage.setItem('userRole', user.role);
                     
-                    // Simple redirect instead of content replacement
+                    // If remember me is checked, store the username
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedUsername', username);
+                    } else {
+                        localStorage.removeItem('rememberedUsername');
+                    }
+
+                    // Add login timestamp
+                    localStorage.setItem('lastLogin', new Date().toISOString());
+
+                    // Redirect to appropriate dashboard
                     window.location.href = user.dashboard;
                 } catch (error) {
                     console.error('Error during login:', error);
@@ -197,7 +211,37 @@
                 }
             } else {
                 hideLoading();
-                alert('Invalid username or password. Please try again.');
+                // Show error message with animation
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'error-message';
+                errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid username or password. Please try again.';
+                document.querySelector('.login-form').insertBefore(errorMessage, document.querySelector('.form-options'));
+                
+                // Remove error message after 3 seconds
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 3000);
+            }
+        });
+
+        // Check for remembered username
+        document.addEventListener('DOMContentLoaded', function() {
+            const rememberedUsername = localStorage.getItem('rememberedUsername');
+            if (rememberedUsername) {
+                document.getElementById('username').value = rememberedUsername;
+                document.getElementById('remember').checked = true;
+            }
+
+            // Check if user is already logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+            if (isLoggedIn && userRole) {
+                const users = {
+                    admin: 'admin-dashboard.html',
+                    driver: 'driver-dashboard.html',
+                    staff: 'staff-dashboard.html'
+                };
+                window.location.href = users[userRole];
             }
         });
 
@@ -205,7 +249,9 @@
         window.addEventListener('popstate', function(event) {
             const currentPath = window.location.pathname;
             if (currentPath.endsWith('login.html')) {
-                localStorage.clear();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('lastLogin');
             }
         });
     </script>

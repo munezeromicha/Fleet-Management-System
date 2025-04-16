@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Request - UR Fleet Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="asset-manager-dashboard.css">
+    <link rel="stylesheet" href="staff-dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="./image/logo_for_ur.png" alt="University of Rwanda Logo" class="logo">
+                <h2>Staff Portal</h2>
+            </div>
+            <ul class="nav-links">
+                <li data-page="dashboard">
+                    <a href="staff-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li data-page="vehicle-requests">
+                    <a href="vehicle-requests.html"><i class="fas fa-car"></i> Vehicle Requests</a>
+                </li>
+                <li data-page="trip-history">
+                    <a href="trip-history.html"><i class="fas fa-history"></i> Trip History</a>
+                </li>
+                <li data-page="notifications">
+                    <a href="notifications.html"><i class="fas fa-bell"></i> Notifications</a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#profile"><i class="fas fa-user-circle"></i> Profile</a>
+                <a href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="user-info">
+                    <span class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </span>
+                    <div class="user-profile">
+                        <img src="./image/avatar.png" alt="Staff Profile">
+                        <span>Staff Name</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-page active">
+                <div class="section-header">
+                    <h2>Request Details</h2>
+                    <div class="header-actions">
+                        <a href="vehicle-requests.html" class="btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Requests
+                        </a>
+                        <a href="edit-request.html?id=REQ-001" class="btn-primary">
+                            <i class="fas fa-edit"></i> Edit Request
+                        </a>
+                    </div>
+                </div>
+
+                <div class="request-details">
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <h3>Request Information</h3>
+                            <span class="status pending">Pending</span>
+                        </div>
+                        <div class="detail-content">
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <label>Request ID</label>
+                                    <p>REQ-001</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Date Submitted</label>
+                                    <p>2024-02-22</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <label>Purpose</label>
+                                    <p>Field Trip</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Department</label>
+                                    <p>Computer Science</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <label>Destination</label>
+                                    <p>Huye Campus</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Number of Passengers</label>
+                                    <p>15</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <label>Start Date & Time</label>
+                                    <p>2024-02-23 08:00</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>End Date & Time</label>
+                                    <p>2024-02-23 17:00</p>
+                                </div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-group">
+                                    <label>Preferred Vehicle Type</label>
+                                    <p>Minibus</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Special Requirements</label>
+                                    <p>None</p>
+                                </div>
+                            </div>
+                            <div class="detail-group full-width">
+                                <label>Additional Notes</label>
+                                <p>This is a field trip for the Computer Science department students to visit Huye Campus for research purposes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <h3>Approval Status</h3>
+                        </div>
+                        <div class="detail-content">
+                            <div class="status-timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h4>Request Submitted</h4>
+                                        <p>2024-02-22 10:30</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h4>Under Review</h4>
+                                        <p>2024-02-22 11:00</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item pending">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h4>Awaiting Approval</h4>
+                                        <p>Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <h3>Comments</h3>
+                        </div>
+                        <div class="detail-content">
+                            <div class="comments-section">
+                                <div class="comment">
+                                    <div class="comment-header">
+                                        <span class="comment-author">Asset Manager</span>
+                                        <span class="comment-time">2024-02-22 11:00</span>
+                                    </div>
+                                    <p>Request is under review. Will check vehicle availability.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Authentication and role verification
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+
+            if (!isLoggedIn || userRole !== 'staff') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Set staff name from localStorage
+            const username = localStorage.getItem('username');
+            const userProfileName = document.querySelector('.user-profile span');
+            if (userProfileName) {
+                userProfileName.textContent = username;
+            }
+
+            // Handle logout
+            const logoutButton = document.querySelector('.sidebar-footer a[href="login.html"]');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('userRole');
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // Get request ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestId = urlParams.get('id');
+
+            // Here you would typically fetch the request details from your backend
+            // For now, we're using static data
+            if (requestId) {
+                // Update the edit button href
+                const editButton = document.querySelector('.header-actions .btn-primary');
+                if (editButton) {
+                    editButton.href = `edit-request.html?id=${requestId}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
