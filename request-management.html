@@ -175,6 +175,85 @@
             border-radius: 5px;
             margin-top: 5px;
         }
+
+        .status-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .driver-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .driver-status.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .driver-status.assigned {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .driver-assignment {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .assignment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .driver-select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-width: 200px;
+        }
+
+        .confirmation-status {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .confirmation-label {
+            font-weight: 500;
+        }
+
+        .confirmation-value {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .confirmation-value.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .confirmation-value.confirmed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .confirmation-value.declined {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -261,77 +340,56 @@
 
                 <!-- Request List -->
                 <div class="request-list">
-                    <div class="request-item">
+                    <div class="request-item" data-status="pending" data-driver-confirmation="pending">
                         <div class="request-header">
-                            <h3>Request #VR-001</h3>
-                            <span class="status-badge status-pending">Pending Approval</span>
+                            <h3>Request #REQ-001</h3>
+                            <div class="status-container">
+                                <span class="status pending">Pending</span>
+                                <span class="driver-status pending">Driver: Not Assigned</span>
+                            </div>
                         </div>
+                        
                         <div class="request-info">
                             <div class="info-group">
-                                <span class="info-label">Requester</span>
-                                <span class="info-value">John Doe</span>
+                                <span class="info-label">Date</span>
+                                <span class="info-value">2024-04-15</span>
                             </div>
                             <div class="info-group">
-                                <span class="info-label">Department</span>
-                                <span class="info-value">Computer Science</span>
-                            </div>
-                            <div class="info-group">
-                                <span class="info-label">Reason</span>
-                                <span class="info-value">Field Trip</span>
-                            </div>
-                            <div class="info-group">
-                                <span class="info-label">Passengers</span>
-                                <span class="info-value">25</span>
+                                <span class="info-label">Time</span>
+                                <span class="info-value">09:00 AM</span>
                             </div>
                             <div class="info-group">
                                 <span class="info-label">Destination</span>
-                                <span class="info-value">Huye Campus</span>
+                                <span class="info-value">Kigali Convention Center</span>
                             </div>
                             <div class="info-group">
-                                <span class="info-label">Estimated Distance</span>
-                                <span class="info-value">150 km</span>
-                            </div>
-                            <div class="info-group">
-                                <span class="info-label">Start Date</span>
-                                <span class="info-value">2024-03-15</span>
-                            </div>
-                            <div class="info-group">
-                                <span class="info-label">End Date</span>
-                                <span class="info-value">2024-03-15</span>
+                                <span class="info-label">Purpose</span>
+                                <span class="info-value">Meeting</span>
                             </div>
                         </div>
 
-                        <!-- Vehicle Assignment Section -->
-                        <div class="vehicle-assignment">
-                            <h4>Vehicle Assignment</h4>
-                            <select class="vehicle-selector">
-                                <option value="">Select Vehicle</option>
-                                <option value="UR-001">UR-001 - Toyota Coaster (30 seats)</option>
-                                <option value="UR-002">UR-002 - Toyota Coaster (30 seats)</option>
-                                <option value="UR-003">UR-003 - Toyota Hiace (15 seats)</option>
-                            </select>
-                        </div>
                         <div class="driver-assignment">
-                            <h4>Driver Assignment</h4>
-                            <select class="driver-selector">
-                                <option value="">Select Driver</option>
-                                <option value="Kalisa-Rugano">Kalisa-Rugano</option>
-                                <option value="Rukara-Nzeyumwami">Rukara-Nzeyumwami</option>
-                                <option value="Mabano-Muneza">Mabano-Muneza</option>
-                            </select>
-                        </div>
-
-                        <!-- Comment Section -->
-                        <div class="comment-section">
-                            <textarea class="comment-input" placeholder="Add a comment or reason for approval/decline..."></textarea>
+                            <div class="assignment-header">
+                                <h4>Driver Assignment</h4>
+                                <select class="driver-select" id="driverSelect-REQ-001">
+                                    <option value="">Select Driver</option>
+                                    <option value="DRV-001">John Doe</option>
+                                    <option value="DRV-002">Jane Smith</option>
+                                    <option value="DRV-003">Robert Johnson</option>
+                                </select>
+                            </div>
+                            <div class="confirmation-status">
+                                <span class="confirmation-label">Driver Confirmation:</span>
+                                <span class="confirmation-value pending">Pending</span>
+                            </div>
                         </div>
 
                         <div class="request-actions">
-                            <button class="action-btn approve-btn">
-                                <i class="fas fa-check"></i> Approve Request
+                            <button class="action-btn approve" onclick="approveRequest('REQ-001')" disabled>
+                                <i class="fas fa-check"></i> Approve
                             </button>
-                            <button class="action-btn decline-btn">
-                                <i class="fas fa-times"></i> Decline Request
+                            <button class="action-btn reject" onclick="rejectRequest('REQ-001')">
+                                <i class="fas fa-times"></i> Reject
                             </button>
                         </div>
                     </div>
@@ -403,50 +461,71 @@
                 document.querySelector('.user-profile span').textContent = username;
             }
 
-            // Handle approve/decline buttons
-            document.querySelectorAll('.action-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const action = this.classList.contains('approve-btn') ? 'approve' : 'decline';
+            // Get all driver select elements
+            const driverSelects = document.querySelectorAll('.driver-select');
+            
+            driverSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const requestId = this.id.split('-')[1];
                     const requestItem = this.closest('.request-item');
-                    const requestId = requestItem.querySelector('h3').textContent;
-                    const comment = requestItem.querySelector('.comment-input').value;
-                    const selectedVehicle = requestItem.querySelector('.vehicle-selector').value;
-                    const selectedDriver = requestItem.querySelector('.driver-selector').value;
-                    
-                    if (action === 'approve' && !selectedVehicle) {
-                        alert('Please select a vehicle before approving the request.');
-                        return;
-                    }
-                    
-                    // Here you would typically make an API call to update the request status
-                    console.log(`${action} request ${requestId}`);
-                    console.log(`Comment: ${comment}`);
-                    if (selectedVehicle) {
-                        console.log(`Assigned Vehicle: ${selectedVehicle}`);
-                    }
-                    
-                    // Update UI to reflect the change
-                    const statusBadge = requestItem.querySelector('.status-badge');
-                    if (action === 'approve') {
-                        statusBadge.className = 'status-badge status-approved';
-                        statusBadge.textContent = 'Approved';
+                    const driverStatus = requestItem.querySelector('.driver-status');
+                    const confirmationStatus = requestItem.querySelector('.confirmation-value');
+                    const approveBtn = requestItem.querySelector('.action-btn.approve');
+
+                    if (this.value) {
+                        driverStatus.textContent = `Driver: ${this.options[this.selectedIndex].text}`;
+                        driverStatus.className = 'driver-status assigned';
+                        confirmationStatus.className = 'confirmation-value pending';
+                        confirmationStatus.textContent = 'Pending';
+                        approveBtn.disabled = true;
                     } else {
-                        statusBadge.className = 'status-badge status-declined';
-                        statusBadge.textContent = 'Declined';
-                    }
-                    
-                    // Remove action buttons and make fields readonly
-                    requestItem.querySelector('.request-actions').remove();
-                    const commentInput = requestItem.querySelector('.comment-input');
-                    if (commentInput) {
-                        const commentText = comment || 'No comment provided';
-                        const commentDisplay = document.createElement('p');
-                        commentDisplay.innerHTML = `<strong>${action === 'approve' ? 'Approval' : 'Decline'} Comment:</strong> ${commentText}`;
-                        commentInput.parentNode.replaceChild(commentDisplay, commentInput);
+                        driverStatus.textContent = 'Driver: Not Assigned';
+                        driverStatus.className = 'driver-status pending';
+                        confirmationStatus.className = 'confirmation-value pending';
+                        confirmationStatus.textContent = 'Pending';
+                        approveBtn.disabled = true;
                     }
                 });
             });
         });
+
+        function approveRequest(requestId) {
+            const requestItem = document.querySelector(`[data-request-id="${requestId}"]`);
+            const driverStatus = requestItem.querySelector('.driver-status');
+            const confirmationStatus = requestItem.querySelector('.confirmation-value');
+            
+            if (driverStatus.classList.contains('assigned') && 
+                confirmationStatus.classList.contains('confirmed')) {
+                // Update request status
+                requestItem.setAttribute('data-status', 'approved');
+                requestItem.querySelector('.status').textContent = 'Approved';
+                requestItem.querySelector('.status').className = 'status approved';
+                
+                // Disable approve button
+                requestItem.querySelector('.action-btn.approve').disabled = true;
+                
+                // Show success message
+                alert('Request approved successfully!');
+            } else {
+                alert('Cannot approve request. Driver must be assigned and confirmed availability.');
+            }
+        }
+
+        function rejectRequest(requestId) {
+            const requestItem = document.querySelector(`[data-request-id="${requestId}"]`);
+            
+            // Update request status
+            requestItem.setAttribute('data-status', 'rejected');
+            requestItem.querySelector('.status').textContent = 'Rejected';
+            requestItem.querySelector('.status').className = 'status rejected';
+            
+            // Disable buttons
+            requestItem.querySelector('.action-btn.approve').disabled = true;
+            requestItem.querySelector('.action-btn.reject').disabled = true;
+            
+            // Show success message
+            alert('Request rejected successfully!');
+        }
 
         // Handle logout
         document.querySelector('a[href="login.html"]').addEventListener('click', function(e) {
