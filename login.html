@@ -107,27 +107,34 @@
 
         // Preload dashboard pages
         function preloadDashboards() {
-            const dashboards = ['admin-dashboard.html', 'driver-dashboard.html', 'staff-dashboard.html'];
+            const dashboards = [
+                { file: 'admin-dashboard.html', css: 'admin-dashboard.css' },
+                { file: 'driver-dashboard.html', css: 'driver-dashboard.css' },
+                { file: 'staff-dashboard.html', css: 'staff-dashboard.css' },
+                { file: 'system-admin-dashboard.html', css: 'styles.css' }
+            ];
+            
             return Promise.all(dashboards.map(async dashboard => {
                 try {
-                    // Use XMLHttpRequest instead of fetch to handle local files better
-                    return new Promise((resolve, reject) => {
-                        const xhr = new XMLHttpRequest();
-                        xhr.open('GET', dashboard, true);
-                        xhr.onload = function() {
-                            if (xhr.status === 200) {
-                                resolve(xhr.responseText);
-                            } else {
-                                reject(new Error(`Failed to load ${dashboard}`));
-                            }
-                        };
-                        xhr.onerror = function() {
-                            reject(new Error(`Network error loading ${dashboard}`));
-                        };
-                        xhr.send();
-                    });
+                    // Load HTML file
+                    const htmlResponse = await fetch(dashboard.file);
+                    if (!htmlResponse.ok) {
+                        console.warn(`Failed to load ${dashboard.file}`);
+                        return null;
+                    }
+                    
+                    // Load CSS file
+                    const cssResponse = await fetch(dashboard.css);
+                    if (!cssResponse.ok) {
+                        console.warn(`Failed to load ${dashboard.css}`);
+                    }
+                    
+                    return {
+                        html: await htmlResponse.text(),
+                        css: await cssResponse.text()
+                    };
                 } catch (error) {
-                    console.error(`Error loading ${dashboard}:`, error);
+                    console.error(`Error loading ${dashboard.file}:`, error);
                     return null;
                 }
             }));
@@ -136,9 +143,17 @@
         // Cache dashboard content
         let dashboardCache = {};
         preloadDashboards().then(contents => {
-            const dashboards = ['admin-dashboard.html', 'driver-dashboard.html', 'staff-dashboard.html'];
+            const dashboards = [
+                'admin-dashboard.html',
+                'driver-dashboard.html',
+                'staff-dashboard.html',
+                'system-admin-dashboard.html'
+            ];
+            
             dashboards.forEach((dashboard, index) => {
-                dashboardCache[dashboard] = contents[index];
+                if (contents[index]) {
+                    dashboardCache[dashboard] = contents[index];
+                }
             });
         });
 
@@ -160,13 +175,22 @@
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('remember').checked;
             
-            // Only check for system admin credentials
-            if (username === 'superAdmin' && password === 'superAdmin123') {
+            // Define user credentials and their roles
+            const userCredentials = {
+                'superAdmin': { password: 'superAdmin123', role: 'system_admin', name: 'System Administrator', dashboard: 'system-admin-dashboard.html' },
+                'staff': { password: 'staff123', role: 'staff', name: 'Staff Member', dashboard: 'staff-dashboard.html' },
+                'driver': { password: 'driver123', role: 'driver', name: 'Driver', dashboard: 'driver-dashboard.html' },
+                'admin': { password: 'admin123', role: 'admin', name: 'Administrator', dashboard: 'admin-dashboard.html' }
+            };
+            
+            // Check if user exists and password matches
+            const user = userCredentials[username];
+            if (user && user.password === password) {
                 try {
                     // Store login state and user information
                     localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('username', 'System Administrator');
-                    localStorage.setItem('userRole', 'system_admin');
+                    localStorage.setItem('username', user.name);
+                    localStorage.setItem('userRole', user.role);
                     
                     // If remember me is checked, store the username
                     if (rememberMe) {
@@ -178,8 +202,13 @@
                     // Add login timestamp
                     localStorage.setItem('lastLogin', new Date().toISOString());
 
-                    // Redirect to system admin dashboard
-                    window.location.href = 'system-admin-dashboard.html';
+                    // Wait for dashboard to be preloaded
+                    if (dashboardCache[user.dashboard]) {
+                        window.location.href = user.dashboard;
+                    } else {
+                        // If dashboard not preloaded, redirect anyway
+                        window.location.href = user.dashboard;
+                    }
                 } catch (error) {
                     console.error('Error during login:', error);
                     alert('Error during login. Please try again.');
@@ -212,8 +241,29 @@
             // Check if user is already logged in
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const userRole = localStorage.getItem('userRole');
-            if (isLoggedIn && userRole === 'system_admin') {
-                window.location.href = 'system-admin-dashboard.html';
+            
+            // Define dashboard mappings
+            const dashboardMappings = {
+                'system_admin': 'system-admin-dashboard.html',
+                'staff': 'staff-dashboard.html',
+                'driver': 'driver-dashboard.html',
+                'admin': 'admin-dashboard.html'
+            };
+
+            // Only redirect if user is logged in and has a valid role
+            if (isLoggedIn === 'true' && userRole && dashboardMappings[userRole]) {
+                // Clear any existing error messages
+                const existingError = document.querySelector('.error-message');
+                if (existingError) {
+                    existingError.remove();
+                }
+                // Redirect to appropriate dashboard
+                window.location.href = dashboardMappings[userRole];
+            } else {
+                // Clear any existing login state if invalid
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('lastLogin');
             }
         });
 
