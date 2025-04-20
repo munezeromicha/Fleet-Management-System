@@ -147,6 +147,7 @@
                 'admin-dashboard.html',
                 'driver-dashboard.html',
                 'staff-dashboard.html',
+                'hr-dashboard.html',
                 'system-admin-dashboard.html'
             ];
             
@@ -180,6 +181,7 @@
                 'superAdmin': { password: 'superAdmin123', role: 'system_admin', name: 'System Administrator', dashboard: 'system-admin-dashboard.html' },
                 'staff': { password: 'staff123', role: 'staff', name: 'Staff Member', dashboard: 'staff-dashboard.html' },
                 'driver': { password: 'driver123', role: 'driver', name: 'Driver', dashboard: 'driver-dashboard.html' },
+                'staffAdmin': { password: 'hr123', role: 'hr', name: 'hr', dashboard: 'hr-dashboard.html' },
                 'admin': { password: 'admin123', role: 'admin', name: 'Administrator', dashboard: 'admin-dashboard.html' }
             };
             
@@ -247,7 +249,8 @@
                 'system_admin': 'system-admin-dashboard.html',
                 'staff': 'staff-dashboard.html',
                 'driver': 'driver-dashboard.html',
-                'admin': 'admin-dashboard.html'
+                'admin': 'admin-dashboard.html',
+                'hr': 'hr-dashboard.html'
             };
 
             // Only redirect if user is logged in and has a valid role

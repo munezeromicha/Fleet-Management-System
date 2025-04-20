@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Admin Dashboard - UR Fleet Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="hr-shared.css">
+    <link rel="stylesheet" href="hr-dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--ur-blue);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .stat-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .clickable-row {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .clickable-row:hover {
+            background-color: rgba(8, 114, 179, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="./image/logo.jpg" alt="University of Rwanda Logo">
+            <h2>FMS Staff Admin</h2>
+        </div>
+        <ul class="nav-links">
+            <li class="active">
+                <a href="hr-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="hr-staff-management.html"><i class="fas fa-users"></i> Staff Management</a>
+            </li>
+            <li>
+                <a href="hr-driver-management.html"><i class="fas fa-user-tie"></i> Driver Management</a>
+            </li>
+            <li>
+                <a href="hr-car_request.html"><i class="fas fa-car"></i> Car Requests</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="user-info">
+                <div class="notifications-container">
+                    <span class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </span>
+                    <div class="notifications-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-all-read">Mark all as read</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <i class="fas fa-user-plus"></i>
+                                <div class="notification-content">
+                                    <p>New staff member added: John Doe</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <i class="fas fa-calendar-check"></i>
+                                <div class="notification-content">
+                                    <p>Leave request pending approval</p>
+                                    <span class="notification-time">4 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <i class="fas fa-chart-line"></i>
+                                <div class="notification-content">
+                                    <p>Performance review completed</p>
+                                    <span class="notification-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="./image/avatar.png" alt="Staff Admin Profile">
+                    <p>Staff Admin</p>
+                    <div class="user-dropdown">
+                        <a href="#profile" class="user-dropdown-item">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a href="#settings" class="user-dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#help" class="user-dropdown-item">
+                            <i class="fas fa-question-circle"></i> Help & Support
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="login.html" class="user-dropdown-item" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Staff</h3>
+                    <p>156 Employees</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Active Drivers</h3>
+                    <p>24 Drivers</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Leave Requests</h3>
+                    <p>12 Pending</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Performance Trends</h3>
+                    <div class="chart-actions">
+                        <select id="timeRange" class="chart-select">
+                            <option value="month">Last Month</option>
+                            <option value="quarter">Last Quarter</option>
+                            <option value="year">Last Year</option>
+                        </select>
+                    </div>
+                </div>
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Department Performance</h3>
+                    <div class="chart-actions">
+                        <select id="departmentFilter" class="chart-select">
+                            <option value="all">All Departments</option>
+                            <option value="transport">Transport</option>
+                            <option value="admin">Administration</option>
+                            <option value="finance">Finance</option>
+                        </select>
+                    </div>
+                </div>
+                <canvas id="departmentChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Performance Review Modal -->
+    <div class="modal" id="addReviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Performance Review</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="employeeName">Employee</label>
+                        <select id="employeeName" required>
+                            <option value="">Select Employee</option>
+                            <option value="1">John Doe</option>
+                            <option value="2">Jane Smith</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewDate">Review Date</label>
+                        <input type="date" id="reviewDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="rating-input">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Comments</label>
+                        <textarea id="comments" rows="4" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelReviewBtn">Cancel</button>
+                <button class="btn btn-primary" id="submitReviewBtn">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication check
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+            
+            if (!isLoggedIn || userRole !== 'hr') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user name in the dashboard
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.querySelector('.user-profile span').textContent = username;
+            }
+        });
+
+        // Notifications functionality
+        const notifications = document.querySelector('.notifications');
+        const notificationsDropdown = document.querySelector('.notifications-dropdown');
+        const markAllReadBtn = document.querySelector('.mark-all-read');
+        const notificationBadge = document.querySelector('.notifications .badge');
+
+        notifications.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notificationsDropdown.classList.toggle('show');
+        });
+
+        markAllReadBtn.addEventListener('click', () => {
+            document.querySelectorAll('.notification-item.unread').forEach(item => {
+                item.classList.remove('unread');
+            });
+            notificationBadge.textContent = '0';
+            notificationsDropdown.classList.remove('show');
+        });
+
+        // User dropdown functionality
+        const userProfile = document.querySelector('.user-profile');
+        const userDropdown = document.querySelector('.user-dropdown');
+
+        userProfile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            notificationsDropdown.classList.remove('show');
+            userDropdown.classList.remove('show');
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+        });
+
+        // Make stat cards clickable
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('h3').textContent;
+                let targetPage = '';
+                
+                switch(title) {
+                    case 'Total Staff':
+                        targetPage = 'hr-staff-management.html';
+                        break;
+                    case 'Active Drivers':
+                        targetPage = 'hr-driver-management.html';
+                        break;
+                    case 'Leave Requests':
+                        targetPage = 'hr-car_request.html';
+                        break;
+                    case 'Issues Reported':
+                        targetPage = 'hr-performance.html';
+                        break;
+                }
+                
+                if (targetPage) {
+                    window.location.href = targetPage;
+                }
+            });
+        });
+
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Staff Performance',
+                    data: [4.2, 4.3, 4.1, 4.4, 4.5, 4.3],
+                    borderColor: '#0872b3',
+                    backgroundColor: 'rgba(8, 114, 179, 0.1)',
+                    tension: 0.1,
+                    fill: true
+                }, {
+                    label: 'Driver Performance',
+                    data: [4.5, 4.4, 4.6, 4.5, 4.7, 4.6],
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 3,
+                        max: 5,
+                        ticks: {
+                            stepSize: 0.5
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+
+        // Department Chart
+        const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+        const departmentChart = new Chart(departmentCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Transport', 'Administration', 'Finance', 'IT'],
+                datasets: [{
+                    label: 'Average Rating',
+                    data: [4.5, 4.2, 4.3, 4.4],
+                    backgroundColor: [
+                        'rgba(8, 114, 179, 0.8)',
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',
+                        'rgba(220, 53, 69, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(8, 114, 179, 1)',
+                        'rgba(40, 167, 69, 1)',
+                        'rgba(255, 193, 7, 1)',
+                        'rgba(220, 53, 69, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Rating: ${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 3,
+                        max: 5,
+                        ticks: {
+                            stepSize: 0.5
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart filter functionality
+        document.getElementById('timeRange').addEventListener('change', function() {
+            // Update performance chart data based on selected time range
+            const timeRange = this.value;
+            // Add your data update logic here
+        });
+
+        document.getElementById('departmentFilter').addEventListener('change', function() {
+            // Update department chart data based on selected department
+            const department = this.value;
+            // Add your data update logic here
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+
+        // Modal functionality
+        const addStaffModal = document.getElementById('addStaffModal');
+        const staffDetailsModal = document.getElementById('staffDetailsModal');
+        const addStaffBtn = document.querySelector('.btn-primary');
+        const closeModalBtns = document.querySelectorAll('.modal-close');
+        const cancelAddStaffBtn = document.getElementById('cancelAddStaff');
+        const saveStaffBtn = document.getElementById('saveStaff');
+
+        // Open Add Staff Modal
+        addStaffBtn.addEventListener('click', () => {
+            addStaffModal.classList.add('active');
+        });
+
+        // Close Modals
+        function closeAllModals() {
+            addStaffModal.classList.remove('active');
+            staffDetailsModal.classList.remove('active');
+        }
+
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', closeAllModals);
+        });
+
+        cancelAddStaffBtn.addEventListener('click', closeAllModals);
+
+        // Save Staff
+        saveStaffBtn.addEventListener('click', () => {
+            // Add your save logic here
+            closeAllModals();
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Make table rows clickable
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            row.classList.add('clickable-row');
+            row.addEventListener('click', () => {
+                staffDetailsModal.classList.add('active');
+            });
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Update modal close functionality
+        document.querySelectorAll('.modal-close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                modal.classList.remove('active');
+                showToast('Modal closed', 'info');
+            });
+        });
+
+        // Update save staff functionality
+        document.getElementById('saveStaff').addEventListener('click', function() {
+            // Add your save logic here
+            showToast('Staff member added successfully!', 'success');
+            closeAllModals();
+        });
+
+        // Update delete staff functionality
+        document.querySelectorAll('.btn-secondary[style*="padding: 5px"]').forEach(btn => {
+            if (btn.querySelector('.fa-trash')) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const staffName = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                    if (confirm(`Are you sure you want to delete ${staffName}?`)) {
+                        showToast(`${staffName} deleted successfully`, 'success');
+                        // Add your delete logic here
+                    }
+                });
+            }
+        });
+
+        // Update edit staff functionality
+        document.querySelectorAll('.btn-secondary[style*="padding: 5px"]').forEach(btn => {
+            if (btn.querySelector('.fa-edit')) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const staffName = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                    showToast(`Editing ${staffName}...`, 'info');
+                    // Add your edit logic here
+                });
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+
+        // Modal Controls
+        const addReviewBtn = document.getElementById('addReviewBtn');
+        const addReviewModal = document.getElementById('addReviewModal');
+        const cancelReviewBtn = document.getElementById('cancelReviewBtn');
+        const submitReviewBtn = document.getElementById('submitReviewBtn');
+        const modalClose = document.querySelector('.modal-close');
+
+        addReviewBtn.addEventListener('click', () => {
+            addReviewModal.classList.add('active');
+        });
+
+        function closeModal() {
+            addReviewModal.classList.remove('active');
+        }
+
+        cancelReviewBtn.addEventListener('click', closeModal);
+        modalClose.addEventListener('click', closeModal);
+
+        // Rating Stars
+        const ratingStars = document.querySelectorAll('.rating-input i');
+        ratingStars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-rating');
+                ratingStars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Request Management - UR Fleet Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="hr-shared.css">
+    <link rel="stylesheet" href="hr-car_request.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="./image/logo.jpg" alt="University of Rwanda Logo">
+            <h2>FMS Staff Admin</h2>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="hr-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="hr-staff-management.html"><i class="fas fa-users"></i> Staff Management</a>
+            </li>
+            <li>
+                <a href="hr-driver-management.html"><i class="fas fa-user-tie"></i> Driver Management</a>
+            </li>
+            <li class="active">
+                <a href="hr-car_request.html"><i class="fas fa-car"></i> Car Requests</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="user-info">
+                <div class="notifications-container">
+                    <span class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </span>
+                    <div class="notifications-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-all-read">Mark all as read</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <i class="fas fa-car"></i>
+                                <div class="notification-content">
+                                    <p>New car request from John Doe</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <i class="fas fa-check-circle"></i>
+                                <div class="notification-content">
+                                    <p>Car request approved for Jane Smith</p>
+                                    <span class="notification-time">4 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <i class="fas fa-times-circle"></i>
+                                <div class="notification-content">
+                                    <p>Car request rejected for Michael Brown</p>
+                                    <span class="notification-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="./image/avatar.png" alt="Staff Admin Profile">
+                    <span>Staff Admin</span>
+                    <div class="user-dropdown">
+                        <a href="#profile" class="user-dropdown-item">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a href="#settings" class="user-dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#help" class="user-dropdown-item">
+                            <i class="fas fa-question-circle"></i> Help & Support
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="login.html" class="user-dropdown-item" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Car Request Management Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2 class="table-title">Car Request Management</h2>
+                <div class="table-actions">
+                    <button class="btn btn-primary" onclick="openAddRequestModal()">
+                        <i class="fas fa-plus"></i>
+                        New Car Request
+                    </button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Staff Name</th>
+                        <th>Purpose</th>
+                        <th>Pickup Date</th>
+                        <th>Return Date</th>
+                        <th>Vehicle Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="clickable-row" onclick="openRequestDetailsModal('CR001')">
+                        <td>CR001</td>
+                        <td>John Smith</td>
+                        <td>Field Research</td>
+                        <td>2024-04-01</td>
+                        <td>2024-04-03</td>
+                        <td>SUV</td>
+                        <td><span class="status-badge status-pending">Pending</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-success" onclick="event.stopPropagation(); approveRequest('CR001')">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-danger" onclick="event.stopPropagation(); rejectRequest('CR001')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="clickable-row" onclick="openRequestDetailsModal('CR002')">
+                        <td>CR002</td>
+                        <td>Jane Doe</td>
+                        <td>Conference Attendance</td>
+                        <td>2024-04-05</td>
+                        <td>2024-04-06</td>
+                        <td>Sedan</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); viewDetails('CR002')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="clickable-row" onclick="openRequestDetailsModal('CR003')">
+                        <td>CR003</td>
+                        <td>Michael Brown</td>
+                        <td>Student Field Trip</td>
+                        <td>2024-05-01</td>
+                        <td>2024-05-02</td>
+                        <td>Minibus</td>
+                        <td><span class="status-badge status-rejected">Rejected</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); viewDetails('CR003')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Add Request Modal -->
+    <div class="modal" id="addRequestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New Car Request</h3>
+                <button class="modal-close" onclick="closeAddRequestModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addRequestForm">
+                    <div class="form-group">
+                        <label for="staffName">Staff Name</label>
+                        <select id="staffName" required>
+                            <option value="">Select Staff Member</option>
+                            <option value="John Smith">John Smith</option>
+                            <option value="Jane Doe">Jane Doe</option>
+                            <option value="Michael Brown">Michael Brown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="purpose">Purpose</label>
+                        <select id="purpose" required>
+                            <option value="">Select Purpose</option>
+                            <option value="Field Research">Field Research</option>
+                            <option value="Conference Attendance">Conference Attendance</option>
+                            <option value="Student Field Trip">Student Field Trip</option>
+                            <option value="Official Meeting">Official Meeting</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleType">Vehicle Type</label>
+                        <select id="vehicleType" required>
+                            <option value="">Select Vehicle Type</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Minibus">Minibus</option>
+                            <option value="Bus">Bus</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pickupDate">Pickup Date</label>
+                        <input type="date" id="pickupDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="returnDate">Return Date</label>
+                        <input type="date" id="returnDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" id="destination" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passengers">Number of Passengers</label>
+                        <input type="number" id="passengers" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" rows="4"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddRequestModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitRequestForm()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Details Modal -->
+    <div class="modal" id="requestDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Car Request Details</h3>
+                <button class="modal-close" onclick="closeRequestDetailsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="request-info">
+                    <div class="info-group">
+                        <label>Request ID:</label>
+                        <span id="requestId">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Staff Name:</label>
+                        <span id="requestStaffName">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Purpose:</label>
+                        <span id="requestPurpose">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Vehicle Type:</label>
+                        <span id="requestVehicleType">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Pickup Date:</label>
+                        <span id="requestPickupDate">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Return Date:</label>
+                        <span id="requestReturnDate">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Destination:</label>
+                        <span id="requestDestination">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Passengers:</label>
+                        <span id="requestPassengers">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Status:</label>
+                        <span id="requestStatus">-</span>
+                    </div>
+                    <div class="info-group">
+                        <label>Notes:</label>
+                        <p id="requestNotes">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication Check
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+            
+            if (!isLoggedIn || userRole !== 'hr') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user name in the dashboard
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.querySelector('.user-name').textContent = username;
+            }
+        });
+
+        // User Dropdown Toggle
+        document.querySelector('.user-profile').addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.querySelector('.user-dropdown').classList.toggle('show');
+        });
+
+        document.addEventListener('click', function() {
+            document.querySelector('.user-dropdown').classList.remove('show');
+        });
+
+        // Logout Functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+        });
+
+        // Modal Functions
+        function openAddRequestModal() {
+            document.getElementById('addRequestModal').classList.add('active');
+        }
+
+        function closeAddRequestModal() {
+            document.getElementById('addRequestModal').classList.remove('active');
+        }
+
+        function openRequestDetailsModal(requestId) {
+            document.getElementById('requestDetailsModal').classList.add('active');
+            loadRequestDetails(requestId);
+        }
+
+        function closeRequestDetailsModal() {
+            document.getElementById('requestDetailsModal').classList.remove('active');
+        }
+
+        // Form Submission
+        function submitRequestForm() {
+            const form = document.getElementById('addRequestForm');
+            if (form.checkValidity()) {
+                // Handle form submission
+                closeAddRequestModal();
+                form.reset();
+            } else {
+                form.reportValidity();
+            }
+        }
+
+        // Request Details Loading
+        function loadRequestDetails(requestId) {
+            // This would typically involve an API call
+            const mockRequestData = {
+                id: requestId,
+                staffName: "John Smith",
+                purpose: "Field Research",
+                vehicleType: "SUV",
+                pickupDate: "2024-04-01",
+                returnDate: "2024-04-03",
+                destination: "Huye Campus",
+                passengers: "4",
+                status: "Pending",
+                notes: "Research equipment will be transported"
+            };
+
+            document.getElementById('requestId').textContent = mockRequestData.id;
+            document.getElementById('requestStaffName').textContent = mockRequestData.staffName;
+            document.getElementById('requestPurpose').textContent = mockRequestData.purpose;
+            document.getElementById('requestVehicleType').textContent = mockRequestData.vehicleType;
+            document.getElementById('requestPickupDate').textContent = mockRequestData.pickupDate;
+            document.getElementById('requestReturnDate').textContent = mockRequestData.returnDate;
+            document.getElementById('requestDestination').textContent = mockRequestData.destination;
+            document.getElementById('requestPassengers').textContent = mockRequestData.passengers;
+            document.getElementById('requestStatus').textContent = mockRequestData.status;
+            document.getElementById('requestNotes').textContent = mockRequestData.notes;
+        }
+
+        // Request Actions
+        function approveRequest(requestId) {
+            if (confirm('Are you sure you want to approve this car request?')) {
+                console.log(`Approving car request ${requestId}`);
+            }
+        }
+
+        function rejectRequest(requestId) {
+            if (confirm('Are you sure you want to reject this car request?')) {
+                console.log(`Rejecting car request ${requestId}`);
+            }
+        }
+
+        function viewDetails(requestId) {
+            openRequestDetailsModal(requestId);
+        }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Management - UR Fleet Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="hr-staff-management.css">
+    <link rel="stylesheet" href="hr-dashboard.css">
+</head>
+<body>
+     <!-- Sidebar Navigation -->
+     <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="./image/logo.jpg" alt="University of Rwanda Logo">
+            <h2>FMS Staff Admin</h2>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="hr-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="hr-staff-management.html"><i class="fas fa-users"></i> Staff Management</a>
+            </li>
+            <li>
+                <a href="hr-driver-management.html"><i class="fas fa-user-tie"></i> Driver Management</a>
+            </li>
+            <li>
+                <a href="hr-car_request.html"><i class="fas fa-car"></i> Car Requests</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="user-info">
+                <div class="notifications-container">
+                    <span class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </span>
+                    <div class="notifications-dropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-all-read">Mark all as read</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <i class="fas fa-user-plus"></i>
+                                <div class="notification-content">
+                                    <p>New staff member added: John Doe</p>
+                                    <span class="notification-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <i class="fas fa-calendar-check"></i>
+                                <div class="notification-content">
+                                    <p>Leave request pending approval</p>
+                                    <span class="notification-time">4 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <i class="fas fa-chart-line"></i>
+                                <div class="notification-content">
+                                    <p>Performance review completed</p>
+                                    <span class="notification-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-profile">
+                    <img src="./image/avatar.png" alt="Staff Admin Profile">
+                    <p>Staff Admin</p>
+                    <div class="user-dropdown">
+                        <a href="#profile" class="user-dropdown-item">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a href="#settings" class="user-dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#help" class="user-dropdown-item">
+                            <i class="fas fa-question-circle"></i> Help & Support
+                        </a>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="login.html" class="user-dropdown-item" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Staff Management Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h3 class="table-title">Staff Management</h3>
+                <div class="table-actions">
+                    <button class="btn btn-primary" id="addStaffBtn">
+                        <i class="fas fa-plus"></i> Add Staff
+                    </button>
+                    <button class="btn btn-secondary" id="filterBtn">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Staff ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="clickable-row" data-staff-id="EMP001">
+                        <td>EMP001</td>
+                        <td>John Doe</td>
+                        <td>john.doe@ur.ac.rw</td>
+                        <td>+250 788 123 456</td>
+                        <td>Administration</td>
+                        <td>Staff</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="clickable-row" data-staff-id="EMP002">
+                        <td>EMP002</td>
+                        <td>Jane Smith</td>
+                        <td>jane.smith@ur.ac.rw</td>
+                        <td>+250 788 234 567</td>
+                        <td>Transport</td>
+                        <td>Driver</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="clickable-row" data-staff-id="EMP003">
+                        <td>EMP003</td>
+                        <td>Robert Johnson</td>
+                        <td>robert.j@ur.ac.rw</td>
+                        <td>+250 788 345 678</td>
+                        <td>Finance</td>
+                        <td>Manager</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="clickable-row" data-staff-id="EMP004">
+                        <td>EMP004</td>
+                        <td>Sarah Williams</td>
+                        <td>sarah.w@ur.ac.rw</td>
+                        <td>+250 788 456 789</td>
+                        <td>IT</td>
+                        <td>Staff</td>
+                        <td><span class="status-badge status-pending">On Leave</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="clickable-row" data-staff-id="EMP005">
+                        <td>EMP005</td>
+                        <td>Michael Brown</td>
+                        <td>michael.b@ur.ac.rw</td>
+                        <td>+250 788 567 890</td>
+                        <td>Transport</td>
+                        <td>Driver</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Add Staff Modal -->
+    <div class="modal" id="addStaffModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Staff Member</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addStaffForm">
+                    <div class="form-group">
+                        <label for="staffName">Full Name</label>
+                        <input type="text" id="staffName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffEmail">Email</label>
+                        <input type="email" id="staffEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffPhone">Phone Number</label>
+                        <input type="tel" id="staffPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffDepartment">Department</label>
+                        <select id="staffDepartment" required>
+                            <option value="">Select Department</option>
+                            <option value="Administration">Administration</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Finance">Finance</option>
+                            <option value="IT">IT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffRole">Role</label>
+                        <select id="staffRole" required>
+                            <option value="">Select Role</option>
+                            <option value="Staff">Staff</option>
+                            <option value="Driver">Driver</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Director">Director</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelAddStaff">Cancel</button>
+                <button class="btn btn-primary" id="saveStaff">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Staff Details Modal -->
+    <div class="modal" id="staffDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Staff Details</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <div class="tab active" data-tab="personal">Personal Info</div>
+                    <div class="tab" data-tab="requests">Vehicle Requests</div>
+
+                </div>
+                <div class="tab-content active" id="personal-tab">
+                    <div class="staff-info">
+                        <div class="info-group">
+                            <label>Staff ID:</label>
+                            <span id="staffId">-</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Name:</label>
+                            <span id="staffFullName">-</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Email:</label>
+                            <span id="staffEmail">-</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Phone:</label>
+                            <span id="staffPhone">-</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Department:</label>
+                            <span id="staffDepartment">-</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Role:</label>
+                            <span id="staffRole">-</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Status:</label>
+                            <span id="staffStatus">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="requests-tab">
+                    <table class="sub-table">
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Date</th>
+                                <th>Destination</th>
+                                <th>Purpose</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffRequests">
+                            <tr>
+                                <td>REQ001</td>
+                                <td>2024-03-15</td>
+                                <td>Kigali City</td>
+                                <td>Official Meeting</td>
+                                <td><span class="status-badge status-active">Approved</span></td>
+                                <td>
+                                    <button class="btn btn-secondary" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>REQ002</td>
+                                <td>2024-03-20</td>
+                                <td>Huye Campus</td>
+                                <td>Training Session</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-secondary" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-content" id="leave-tab">
+                    <table class="sub-table">
+                        <thead>
+                            <tr>
+                                <th>Leave ID</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Type</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffLeaveHistory">
+                            <tr>
+                                <td>LV001</td>
+                                <td>2024-02-01</td>
+                                <td>2024-02-05</td>
+                                <td>Annual Leave</td>
+                                <td>Family Vacation</td>
+                                <td><span class="status-badge status-active">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td>LV002</td>
+                                <td>2024-03-10</td>
+                                <td>2024-03-12</td>
+                                <td>Sick Leave</td>
+                                <td>Medical Checkup</td>
+                                <td><span class="status-badge status-active">Approved</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-content" id="performance-tab">
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <h4>Overall Rating</h4>
+                            <div class="rating">4.5/5</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Completed Trips</h4>
+                            <div class="value">24</div>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Leave Days Used</h4>
+                            <div class="value">12/30</div>
+                        </div>
+                    </div>
+                    <div class="performance-chart">
+                        <!-- Performance chart will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication check
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+            
+            if (!isLoggedIn || userRole !== 'hr') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update user name in the dashboard
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.querySelector('.user-profile span').textContent = username;
+            }
+        });
+
+        // Modal functionality
+        const addStaffModal = document.getElementById('addStaffModal');
+        const staffDetailsModal = document.getElementById('staffDetailsModal');
+        const addStaffBtn = document.getElementById('addStaffBtn');
+        const closeModalBtns = document.querySelectorAll('.modal-close');
+        const cancelAddStaffBtn = document.getElementById('cancelAddStaff');
+        const saveStaffBtn = document.getElementById('saveStaff');
+
+        // Open Add Staff Modal
+        addStaffBtn.addEventListener('click', () => {
+            addStaffModal.classList.add('active');
+        });
+
+        // Close Modals
+        function closeAllModals() {
+            addStaffModal.classList.remove('active');
+            staffDetailsModal.classList.remove('active');
+        }
+
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', closeAllModals);
+        });
+
+        cancelAddStaffBtn.addEventListener('click', closeAllModals);
+
+        // Save Staff
+        saveStaffBtn.addEventListener('click', () => {
+            // Add your save logic here
+            closeAllModals();
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Make table rows clickable
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('click', (e) => {
+                if (!e.target.closest('.action-buttons')) {
+                    const staffId = row.getAttribute('data-staff-id');
+                    // Load staff details
+                    loadStaffDetails(staffId);
+                    staffDetailsModal.classList.add('active');
+                }
+            });
+        });
+
+        // Load staff details
+        function loadStaffDetails(staffId) {
+            // This would typically fetch data from an API
+            // For now, we'll use mock data
+            const mockStaffData = {
+                id: staffId,
+                name: "John Doe",
+                email: "john.doe@ur.ac.rw",
+                phone: "+250 788 123 456",
+                department: "Administration",
+                role: "Staff",
+                status: "Active"
+            };
+
+            // Update the modal with staff details
+            document.getElementById('staffId').textContent = mockStaffData.id;
+            document.getElementById('staffFullName').textContent = mockStaffData.name;
+            document.getElementById('staffEmail').textContent = mockStaffData.email;
+            document.getElementById('staffPhone').textContent = mockStaffData.phone;
+            document.getElementById('staffDepartment').textContent = mockStaffData.department;
+            document.getElementById('staffRole').textContent = mockStaffData.role;
+            document.getElementById('staffStatus').textContent = mockStaffData.status;
+        }
+
+        // User Dropdown
+        const userProfile = document.querySelector('.user-profile');
+        const userDropdown = document.createElement('div');
+        userDropdown.className = 'user-dropdown';
+        userDropdown.innerHTML = `
+            <a href="#profile" class="user-dropdown-item">
+                <i class="fas fa-user"></i>
+                My Profile
+            </a>
+            <a href="#settings" class="user-dropdown-item">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+            <div class="user-dropdown-divider"></div>
+            <a href="#help" class="user-dropdown-item">
+                <i class="fas fa-question-circle"></i>
+                Help & Support
+            </a>
+            <div class="user-dropdown-divider"></div>
+            <a href="login.html" class="user-dropdown-item" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        `;
+        userProfile.appendChild(userDropdown);
+
+        userProfile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            userDropdown.classList.remove('show');
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html> 
